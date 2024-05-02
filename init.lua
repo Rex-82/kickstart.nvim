@@ -671,9 +671,9 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         sh = { 'shfmt' },
-        html = { 'prettierd' },
-        css = { 'prettierd' },
-        markdown = { 'prettierd' },
+        html = { 'prettier' },
+        css = { 'prettier' },
+        markdown = { 'prettier' },
         javascript = { 'biome' },
         rust = { 'ast-grep' },
         -- Conform can also run multiple formatters sequentially
