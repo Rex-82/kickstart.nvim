@@ -1,4 +1,4 @@
 return {
   'kkoomen/vim-doge',
-  run = ':call doge#install()',
+  -- Use ":call doge#install()" after install
 }
