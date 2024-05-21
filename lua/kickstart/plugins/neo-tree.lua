@@ -12,7 +12,7 @@ return {
   cmd = 'Neotree',
   keys = {
     { '\\', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
-    { '|', ':Neotree buffers<CR>', { desc = 'NeoTree buffers' } },
+    { '|', ':Neotree buffers toggle<CR>', { desc = 'NeoTree buffers' } },
   },
   opts = {
     filesystem = {
