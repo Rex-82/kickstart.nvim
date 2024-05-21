@@ -521,10 +521,11 @@ require('lazy').setup({
           },
         },
 
-        ast_grep = {
-          cmd = { 'ast-grep', 'lsp' },
-          filetypes = { 'c', 'cpp', 'rust', 'go', 'java', 'python', 'javascript', 'typescript', 'html', 'css', 'kotlin', 'dart', 'lua' },
-          -- root_dir = root_pattern('sgconfig.yaml', 'sgconfig.yml'),
+        rust_analyzer = {
+          cmd = { 'rust-analyzer' },
+          filetypes = { 'rust' },
+          -- root_dir = root_pattern('Cargo.toml', 'rust-project.json'),
+          single_file_support = true,
         },
 
         gopls = {
@@ -627,7 +628,7 @@ require('lazy').setup({
         css = { 'prettier' },
         markdown = { 'prettier' },
         javascript = { 'biome' },
-        rust = { 'ast-grep' },
+        rust = { 'rustfmt' },
         php = { 'pretty-php' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
