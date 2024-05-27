@@ -1,3 +1,43 @@
+-- Neovide related settings
+if vim.g.neovide then
+  -- Set Font and size
+  vim.o.guifont = 'FiraCode_Nerd_Font_Mono:h13' -- text below applies for VimScript
+
+  -- Cursor styling
+  vim.g.neovide_cursor_animation_length = 0.05
+  vim.g.neovide_cursor_trail_size = 0.2
+  vim.g.neovide_cursor_animate_in_insert_mode = true
+
+  -- Scroll styling
+  vim.g.neovide_scroll_animation_length = 0.05
+
+  -- Clipboard keybindings
+  vim.keymap.set('n', '<D-s>', ':w<CR>') -- Save
+  vim.keymap.set('v', '<D-c>', '"+y') -- Copy
+  vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
+  vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
+  vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
+  vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+
+  -- Set scale and resize behaviour
+  vim.g.neovide_scale_factor = 1.0
+  local change_scale_factor = function(delta)
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+  end
+  vim.keymap.set('n', '<C-+>', function()
+    change_scale_factor(1.25)
+  end)
+  vim.keymap.set('n', '<C-->', function()
+    change_scale_factor(1 / 1.25)
+  end)
+end
+
+-- Allow clipboard copy paste in neovim
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -24,7 +64,7 @@ vim.opt.showmode = false
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.opt.clipboard = 'unnamedplus'
+-- vim.opt.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.opt.breakindent = true
