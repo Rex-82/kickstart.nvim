@@ -1,7 +1,7 @@
 -- Neovide related settings
 if vim.g.neovide then
   -- Set Font and size
-  vim.o.guifont = 'FiraCode_Nerd_Font_Mono:h13' -- text below applies for VimScript
+  vim.o.guifont = 'FiraCode_Nerd_Font_Mono:h12' -- text below applies for VimScript
 
   -- Cursor styling
   vim.g.neovide_cursor_animation_length = 0.05
@@ -345,6 +345,7 @@ require('lazy').setup({
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+      pcall(require('telescope').load_extension, 'session-lens') -- add sessions manager in telescope
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -358,6 +359,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>sm', ':Telescope session-lens search_session<CR>', { desc = '[S]ession [M]anager' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
