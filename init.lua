@@ -164,6 +164,7 @@ vim.keymap.set('n', '<leader>dd', ':DogeGenerate<CR>', { desc = 'Doge: Generate 
 
 -- Glow keymaps
 vim.keymap.set('n', '<leader>fg', ':Glow<CR>', { desc = 'Glow: Preview markdown' })
+vim.keymap.set('n', '<leader>fG', '! konsole --qwindowgeometry 960x1080 -e glow -p % &<CR>', { desc = 'Glow: Preview markdown in new window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -630,7 +631,7 @@ require('lazy').setup({
     lazy = false,
     keys = {
       {
-        '<leader>f',
+        '<leader>cF',
         function()
           require('conform').format { async = true, lsp_fallback = true }
         end,
@@ -653,9 +654,9 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         sh = { 'shfmt' },
-        html = { 'prettier' },
-        css = { 'prettier' },
-        markdown = { 'prettier' },
+        html = { 'prettierd' },
+        css = { 'prettierd' },
+        markdown = { 'prettierd' },
         javascript = { 'biome' },
         rust = { 'rustfmt' },
         php = { 'pretty-php' },
