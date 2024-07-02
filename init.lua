@@ -32,6 +32,8 @@ if vim.g.neovide then
   end)
 end
 
+vim.cmd 'cabbr bde bd \\| e ' -- Set abbreviation: ':bde' will be: ':bd | e '
+
 -- Allow clipboard copy paste in neovim
 vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
@@ -45,6 +47,9 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 vim.g.have_nerd_font = true
+
+-- Set gruvbox material colorscheme contrast level
+vim.g.gruvbox_material_background = 'hard'
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -585,8 +590,8 @@ require('lazy').setup({
           },
         },
 
-        intelephense = {
-          filetypes = { 'php' },
+        phpactor = {
+          filetypes = { 'php', 'html' },
           telemetry = {
             enabled = false,
           },
@@ -718,6 +723,8 @@ require('lazy').setup({
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      -- 'chrisgrieser/cmp-nerdfont',
+      'kristijanhusak/vim-dadbod-completion',
     },
     config = function()
       -- See `:help cmp`
@@ -790,6 +797,8 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
+          { name = 'vim-dadbod-completion' },
+          -- { name = 'nerdfont' },
         },
       }
     end,
