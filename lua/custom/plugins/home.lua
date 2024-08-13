@@ -17,7 +17,7 @@ return {
       dashboard.button('f', '󰈞  > Find file', ':Telescope find_files<CR>'),
       dashboard.button('r', '  > Recent', ':Telescope oldfiles<CR>'),
       dashboard.button('l', '  > Sessions List', ':Telescope session-lens search_session<CR>'),
-      dashboard.button('s', '  > Settings', ':e $MYVIMRC <BAR> :cd %:p:h <CR>'),
+      dashboard.button('s', '  > Settings', ':e $MYVIMRC <CR>'),
       dashboard.button('q', '󰩈  > Quit NVIM', ':qa<CR>'),
     }
 

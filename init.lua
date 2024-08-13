@@ -1,7 +1,7 @@
 -- Neovide related settings
 if vim.g.neovide then
   -- Set Font and size
-  vim.o.guifont = 'FiraCode_Nerd_Font_Mono:h12' -- text below applies for VimScript
+  vim.o.guifont = 'FiraCode_Nerd_Font_Mono:h11' -- text below applies for VimScript
 
   -- Cursor styling
   vim.g.neovide_cursor_animation_length = 0.05
@@ -117,25 +117,37 @@ vim.opt.shiftwidth = 4
 -- Set confirmation for some commands
 vim.opt.confirm = true
 
+-- Set highlight on search, but clear on pressing <Esc> in normal mode
+vim.opt.hlsearch = true
+
+-- Better experience with auto-session
+vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
--- Set highlight on search, but clear on pressing <Esc> in normal mode
-vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>Q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', ']t', function()
+  require('todo-comments').jump_next()
+end, { desc = 'Next todo comment' })
+
+vim.keymap.set('n', '[t', function()
+  require('todo-comments').jump_prev()
+  -- vim.cmd 'norm zz' -- TODO: check this
+end, { desc = 'Previous todo comment' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
 --
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
+--
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
@@ -171,6 +183,16 @@ vim.keymap.set('n', '<leader>dd', ':DogeGenerate<CR>', { desc = 'Doge: Generate 
 vim.keymap.set('n', '<leader>fg', ':Glow<CR>', { desc = 'Glow: Preview markdown' })
 vim.keymap.set('n', '<leader>fG', '! konsole --qwindowgeometry 960x1080 -e glow -p % &<CR>', { desc = 'Glow: Preview markdown in new window' })
 
+-- DAP keymaps
+-- vim.keymap.set('n', '<F5>', require('dap').continue)
+-- vim.keymap.set('n', '<F10>', require('dap').step_over)
+-- vim.keymap.set('n', '<F11>', require('dap').step_into)
+-- vim.keymap.set('n', '<F12>', require('dap').step_out)
+-- vim.keymap.set('n', '<leader>b', require('dap').toggle_breakpoint)
+-- vim.keymap.set('n', '<leader>B', function()
+--   require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: )
+-- end)
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -182,6 +204,19 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+-- Setup folds
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'BufWinEnter' }, {
+  group = vim.api.nvim_create_augroup('folding-configs', {}),
+  callback = function()
+    vim.opt.foldmethod = 'expr'
+    vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+    vim.opt.foldtext = '' -- Keep the first line from folding
+    vim.opt.foldlevel = 99 -- Open all folds upon entering file
+    vim.opt.foldlevelstart = 1 -- Open first level, close others
+    vim.opt.foldnestmax = 4 -- stop folding beyond 4 levels of nesting
   end,
 })
 
@@ -261,19 +296,24 @@ require('lazy').setup({
       require('which-key').setup()
 
       -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-        ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-        ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
+      require('which-key').add {
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>c_', hidden = true },
+        { '<leader>d', group = '[D]ocument' },
+        { '<leader>d_', hidden = true },
+        { '<leader>h', group = 'Git [H]unk' },
+        { '<leader>h_', hidden = true },
+        { '<leader>r', group = '[R]ename' },
+        { '<leader>r_', hidden = true },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>s_', hidden = true },
+        { '<leader>t', group = '[T]oggle' },
+        { '<leader>t_', hidden = true },
+        { '<leader>w', group = '[W]orkspace' },
+        { '<leader>w_', hidden = true },
+
+        { '<leader>h', desc = 'Git [H]unk', mode = 'v' },
       }
-      -- visual mode
-      require('which-key').register({
-        ['<leader>h'] = { 'Git [H]unk' },
-      }, { mode = 'v' })
     end,
   },
 
@@ -564,10 +604,24 @@ require('lazy').setup({
         tsserver = {
           settings = {
             implicitProjectConfiguration = {
-              checkJs = true,
+              checkJs = false,
+            },
+            compilerOptions = {
+              strictNullChecks = false,
             },
           },
         },
+
+        biome = {
+          root_dir = function(fname)
+            return require('lspconfig.util').root_pattern('biome.json', 'biome.jsonc')(fname)
+              or require('lspconfig.util').find_package_json_ancestor(fname)
+              or require('lspconfig.util').find_node_modules_ancestor(fname)
+              or require('lspconfig.util').find_git_ancestor(fname)
+          end,
+        },
+
+        -- tailwindcss = {},
 
         rust_analyzer = {
           cmd = { 'rust-analyzer' },
@@ -611,8 +665,9 @@ require('lazy').setup({
             },
           },
         },
+
         emmet_language_server = {
-          filetypes = { 'eruby', 'html', 'javascript', 'javascriptreact', 'pug', 'typescriptreact', 'php' },
+          filetypes = { 'eruby', 'html', 'javascriptreact', 'pug', 'typescriptreact', 'php' },
           -- Read more about this options in the [vscode docs](https://code.visualstudio.com/docs/editor/emmet#_emmet-configuration).
           -- **Note:** only the options listed in the table are supported.
           init_options = {
@@ -732,6 +787,25 @@ require('lazy').setup({
       -- Snippet Engine & its associated nvim-cmp source
       {
         'L3MON4D3/LuaSnip',
+        config = function()
+          local ls = require 'luasnip'
+
+          vim.keymap.set({ 'i' }, '<C-K>', function()
+            ls.expand()
+          end, { silent = true })
+          vim.keymap.set({ 'i', 's' }, '<C-L>', function()
+            ls.jump(1)
+          end, { silent = true })
+          vim.keymap.set({ 'i', 's' }, '<C-J>', function()
+            ls.jump(-1)
+          end, { silent = true })
+
+          vim.keymap.set({ 'i', 's' }, '<C-E>', function()
+            if ls.choice_active() then
+              ls.change_choice(1)
+            end
+          end, { silent = true })
+        end,
         build = (function()
           -- Build Step is needed for regex support in snippets.
           -- This step is not supported in many windows environments.
@@ -749,6 +823,8 @@ require('lazy').setup({
             'rafamadriz/friendly-snippets',
             config = function()
               require('luasnip.loaders.from_vscode').lazy_load()
+              require('luasnip').filetype_extend('javascript', { 'javascriptreact' })
+              require('luasnip').filetype_extend('javascript', { 'html' })
             end,
           },
         },
@@ -911,6 +987,8 @@ require('lazy').setup({
         'vimdoc',
         'xml',
         'yaml',
+        'typescript',
+        'tsx',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -953,7 +1031,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
