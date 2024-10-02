@@ -610,6 +610,9 @@ require('lazy').setup({
           cmd = { 'rust-analyzer' },
           filetypes = { 'rust' },
           -- root_dir = root_pattern('Cargo.toml', 'rust-project.json'),
+          root_dir = function(fname)
+            return require('lspconfig.util').root_pattern('Cargo.toml', 'rust-project.json')(fname) or require('lspconfig.util').find_git_ancestor(fname)
+          end,
           single_file_support = true,
         },
 
@@ -635,6 +638,8 @@ require('lazy').setup({
         -- },
 
         intelephense = {},
+
+        astro = {},
 
         lua_ls = {
           -- cmd = {...},
