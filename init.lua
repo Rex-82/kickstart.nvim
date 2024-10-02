@@ -136,6 +136,19 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>Q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+local config1 = { virtual_text = true, signs = true, underline = true }
+local config2 = { virtual_text = false, signs = true, underline = true }
+
+local function toggle_diags()
+  local current_config = vim.diagnostic.config()
+  if current_config ~= nil and current_config.virtual_text then
+    vim.diagnostic.config(config2)
+  else
+    vim.diagnostic.config(config1)
+  end
+end
+
+vim.keymap.set('n', '<leader>uD', toggle_diags, { desc = 'Toggle diagnostics' })
 vim.keymap.set('n', ']t', function()
   require('todo-comments').jump_next()
 end, { desc = 'Next todo comment' })
