@@ -627,12 +627,14 @@ require('lazy').setup({
           },
         },
 
-        phpactor = {
-          filetypes = { 'php', 'html' },
-          telemetry = {
-            enabled = false,
-          },
-        },
+        -- phpactor = {
+        --   filetypes = { 'php', 'html' },
+        --   telemetry = {
+        --     enabled = false,
+        --   },
+        -- },
+
+        intelephense = {},
 
         lua_ls = {
           -- cmd = {...},
