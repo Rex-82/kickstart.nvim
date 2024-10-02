@@ -584,16 +584,16 @@ require('lazy').setup({
         -- tsserver = {},
         --
 
-        tsserver = {
-          settings = {
-            implicitProjectConfiguration = {
-              checkJs = false,
-            },
-            compilerOptions = {
-              strictNullChecks = false,
-            },
-          },
-        },
+        -- tsserver = {
+        --   settings = {
+        --     implicitProjectConfiguration = {
+        --       checkJs = false,
+        --     },
+        --     compilerOptions = {
+        --       strictNullChecks = false,
+        --     },
+        --   },
+        -- },
 
         biome = {
           root_dir = function(fname)
