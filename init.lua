@@ -758,9 +758,11 @@ require('lazy').setup({
         html = { 'prettierd' },
         css = { 'prettierd' },
         markdown = { 'prettierd' },
-        javascript = { 'biome' },
+        javascript = { 'biome', 'prettierd' },
+        json = { 'biome', 'prettierd' },
         rust = { 'rustfmt' },
-        php = { 'pretty-php' },
+        php = { 'pretty-php', 'prettierd' },
+        astro = { 'prettierd', 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -971,6 +973,7 @@ require('lazy').setup({
         'javascript',
         'typescript',
         'tsx',
+        'astro',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -982,9 +985,6 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
-      autotag = {
-        enable = true,
-      },
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
