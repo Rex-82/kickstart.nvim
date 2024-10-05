@@ -604,6 +604,8 @@ require('lazy').setup({
           end,
         },
 
+        graphql = {},
+
         -- tailwindcss = {},
 
         rust_analyzer = {
@@ -763,6 +765,7 @@ require('lazy').setup({
         rust = { 'rustfmt' },
         php = { 'pretty-php', 'prettierd' },
         astro = { 'prettierd', 'prettier' },
+        graphql = { 'prettierd', 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
