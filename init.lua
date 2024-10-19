@@ -631,15 +631,6 @@ require('lazy').setup({
           },
         },
 
-        -- phpactor = {
-        --   filetypes = { 'php', 'html' },
-        --   telemetry = {
-        --     enabled = false,
-        --   },
-        -- },
-
-        intelephense = {},
-
         astro = {},
 
         lua_ls = {
@@ -658,7 +649,7 @@ require('lazy').setup({
         },
 
         emmet_language_server = {
-          filetypes = { 'eruby', 'html', 'javascriptreact', 'pug', 'typescriptreact', 'php' },
+          filetypes = { 'eruby', 'html', 'javascriptreact', 'pug', 'typescriptreact' },
           -- Read more about this options in the [vscode docs](https://code.visualstudio.com/docs/editor/emmet#_emmet-configuration).
           -- **Note:** only the options listed in the table are supported.
           init_options = {
@@ -761,7 +752,6 @@ require('lazy').setup({
         javascript = { 'biome', 'prettierd' },
         json = { 'biome', 'prettierd' },
         rust = { 'rustfmt' },
-        php = { 'pretty-php', 'prettierd' },
         astro = { 'prettierd', 'prettier' },
         graphql = { 'prettierd', 'prettier' },
         -- Conform can also run multiple formatters sequentially
