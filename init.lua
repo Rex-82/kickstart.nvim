@@ -605,6 +605,8 @@ require('lazy').setup({
 
         graphql = {},
 
+        angularls = {},
+
         -- tailwindcss = {},
 
         rust_analyzer = {
