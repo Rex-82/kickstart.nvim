@@ -6,7 +6,7 @@ return {
   },
   config = function()
     require('auto-session').setup {
-      auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+      suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
     }
   end,
 }
