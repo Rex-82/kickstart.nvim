@@ -1,7 +1,7 @@
 -- Neovide related settings
 if vim.g.neovide then
   -- Set Font and size
-  vim.o.guifont = 'FiraCode_Nerd_Font_Mono:h11' -- text below applies for VimScript
+  vim.o.guifont = 'FiraCode_Nerd_Font_Mono:h11'
 
   -- Cursor styling
   vim.g.neovide_cursor_animation_length = 0.05
@@ -32,7 +32,8 @@ if vim.g.neovide then
   end)
 end
 
-vim.cmd 'cabbr bde bd \\| e ' -- Set abbreviation: ':bde' will be: ':bd | e '
+-- Set abbreviation: ':bde' will be: ':bd | e '
+vim.cmd 'cabbr bde bd \\| e '
 
 -- Allow clipboard copy paste in neovim
 vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
@@ -41,8 +42,6 @@ vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 
 -- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -52,9 +51,7 @@ vim.g.have_nerd_font = true
 vim.g.gruvbox_material_background = 'hard'
 
 -- [[ Setting options ]]
--- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
+-- See `:help vim.opt` and `:help option-list`
 
 -- Make line numbers default
 vim.opt.number = true
@@ -97,12 +94,6 @@ vim.opt.timeoutlen = 350
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
-vim.opt.list = false
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
@@ -110,7 +101,7 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 15
 
 -- Set fixed tab and shift size
 vim.opt.tabstop = 4
@@ -150,39 +141,26 @@ local function toggle_diags()
 end
 
 vim.keymap.set('n', '<leader>uD', toggle_diags, { desc = 'Toggle diagnostics' })
+
+-- Jump to next todo comment
 vim.keymap.set('n', ']t', function()
   require('todo-comments').jump_next()
 end, { desc = 'Next todo comment' })
 
+-- Jump to previous todo comment
 vim.keymap.set('n', '[t', function()
   require('todo-comments').jump_prev()
-  -- vim.cmd 'norm zz' -- TODO: check this
 end, { desc = 'Previous todo comment' })
 
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
---
+-- Exit terminal mode in the builtin terminal
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
 -- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
--- Custom keymaps
 
 -- Markdown specific commands
 vim.keymap.set('n', 'gm1', [[:%s/●/\r-/g]], { desc = 'Replace ● with -' })
@@ -200,21 +178,10 @@ vim.keymap.set('n', '<leader>dd', ':DogeGenerate<CR>', { desc = 'Doge: Generate 
 vim.keymap.set('n', '<leader>fg', ':Glow<CR>', { desc = 'Glow: Preview markdown' })
 vim.keymap.set('n', '<leader>fG', '! konsole --qwindowgeometry 960x1080 -e glow -p % &<CR>', { desc = 'Glow: Preview markdown in new window' })
 
--- DAP keymaps
--- vim.keymap.set('n', '<F5>', require('dap').continue)
--- vim.keymap.set('n', '<F10>', require('dap').step_over)
--- vim.keymap.set('n', '<F11>', require('dap').step_into)
--- vim.keymap.set('n', '<F12>', require('dap').step_out)
--- vim.keymap.set('n', '<leader>b', require('dap').toggle_breakpoint)
--- vim.keymap.set('n', '<leader>B', function()
---   require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: )
--- end)
-
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
 -- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -238,7 +205,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'Buf
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
---    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
+--  See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -248,67 +215,16 @@ vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
 --
---  To check the current status of your plugins, run
---    :Lazy
---
---  You can press `?` in this menu for help. Use `:q` to close the window
---
---  To update plugins you can run
---    :Lazy update
---
--- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-
-  -- NOTE: Plugins can also be added by using a table,
-  -- with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
-  --
-  -- Use `opts = {}` to force a plugin to be loaded.
-  --
-  --  This is equivalent to:
-  --    require('Comment').setup({})
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
-  --    require('gitsigns').setup({ ... })
-  --
-  -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
-
-  -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
-  --
-  -- This is often very useful to both group configuration, as well as handle
-  -- lazy loading plugins that don't need to be loaded immediately at startup.
-  --
-  -- For example, in the following configuration, we use:
-  --  event = 'VimEnter'
-  --
-  -- which loads which-key before all the UI elements are loaded. Events can be
-  -- normal autocommands events (`:help autocmd-events`).
-  --
-  -- Then, because we use the `config` key, the configuration only runs
-  -- after the plugin has been loaded:
-  --  config = function() ... end
-
-  { -- Useful plugin to show you pending keybinds.
+  -- which key
+  {
     'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+    event = 'VimEnter', -- Sets the loading event to 'VimEnter' - See`:help autocmd-events`.
     config = function() -- This is the function that runs, AFTER loading
       require('which-key').setup()
 
@@ -334,14 +250,8 @@ require('lazy').setup({
     end,
   },
 
-  -- NOTE: Plugins can specify dependencies.
-  --
-  -- The dependencies are proper plugin specifications as well - anything
-  -- you do for a plugin at the top level, you can do for a dependency.
-  --
-  -- Use the `dependencies` key to specify the dependencies of a particular plugin
-
-  { -- Fuzzy Finder (files, lsp, etc)
+  -- Fuzzy Finder (files, lsp, etc)
+  {
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
     branch = '0.1.x',
@@ -350,19 +260,18 @@ require('lazy').setup({
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
         'nvim-telescope/telescope-fzf-native.nvim',
 
-        -- `build` is used to run some command when the plugin is installed/updated.
-        -- This is only run then, not every time Neovim starts up.
+        -- run 'make' command when the plugin is installed/updated.
         build = 'make',
 
-        -- `cond` is a condition used to determine whether this plugin should be
-        -- installed and loaded.
+        -- `cond` is a condition used to determine whether this plugin should be installed and loaded.
         cond = function()
           return vim.fn.executable 'make' == 1
         end,
       },
+
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
-      -- Useful for getting pretty icons, but requires a Nerd Font.
+      -- Useful for getting pretty icons. Requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
@@ -454,16 +363,11 @@ require('lazy').setup({
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+      { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-      -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
-
-      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-      -- used for completion, annotations and signatures of Neovim apis
       { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
@@ -743,8 +647,7 @@ require('lazy').setup({
       notify_on_error = false,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
+        -- have a well standardized coding style.
         local disable_filetypes = { c = true, cpp = true }
         return {
           timeout_ms = 2500,
@@ -757,17 +660,11 @@ require('lazy').setup({
         html = { 'prettierd' },
         css = { 'prettierd' },
         markdown = { 'prettierd' },
-        javascript = { 'biome', 'prettierd' },
-        json = { 'biome', 'prettierd' },
+        javascript = { { 'biome', 'prettierd' } },
+        json = { { 'biome', 'prettierd' } },
         rust = { 'rustfmt' },
-        astro = { 'prettierd', 'prettier' },
-        graphql = { 'prettierd', 'prettier' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        astro = { { 'prettierd', 'prettier' } },
+        graphql = { { 'prettierd', 'prettier' } },
       },
     },
   },
@@ -808,11 +705,8 @@ require('lazy').setup({
           return 'make install_jsregexp'
         end)(),
         dependencies = {
-          -- "friendly-snippets" contains a variety of premade snippets.
-          -- See the README about individual language/framework/plugin snippets:
-          -- https://github.com/rafamadriz/friendly-snippets
           {
-            'rafamadriz/friendly-snippets',
+            'rafamadriz/friendly-snippets', -- https://github.com/rafamadriz/friendly-snippets
             config = function()
               require('luasnip.loaders.from_vscode').lazy_load()
               require('luasnip').filetype_extend('javascript', { 'javascriptreact' })
