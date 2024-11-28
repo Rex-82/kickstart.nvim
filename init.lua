@@ -647,6 +647,7 @@ require('lazy').setup({
       },
     },
     opts = {
+      stop_after_first = true,
       notify_on_error = false,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
@@ -663,11 +664,12 @@ require('lazy').setup({
         html = { 'prettierd' },
         css = { 'prettierd' },
         markdown = { 'prettierd' },
-        javascript = { { 'biome', 'prettierd' } },
-        json = { { 'biome', 'prettierd' } },
+        javascript = { 'biome', 'prettierd' },
+        typescript = { 'biome', 'prettierd' },
+        json = { 'biome', 'prettierd' },
         rust = { 'rustfmt' },
-        astro = { { 'prettierd', 'prettier' } },
-        graphql = { { 'prettierd', 'prettier' } },
+        astro = { 'prettierd', 'prettier' },
+        graphql = { 'prettierd', 'prettier' },
       },
     },
   },
