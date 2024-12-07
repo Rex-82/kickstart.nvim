@@ -579,18 +579,6 @@ require('lazy').setup({
             variables = {},
           },
         },
-        -- stylelint_lsp = {
-        --   filetypes = { 'css', 'scss' },
-        --   root_dir = require('lspconfig').util.root_pattern('package.json', '.git'),
-        --   settings = {
-        --     stylelintplus = {
-        --       -- see available options in stylelint-lsp documentation
-        --     },
-        --   },
-        --   on_attach = function(client)
-        --     client.server_capabilities.document_formatting = false
-        --   end,
-        -- },
       }
 
       -- Ensure the servers and tools above are installed
