@@ -501,9 +501,9 @@ require('lazy').setup({
         biome = {
           root_dir = function(fname)
             return require('lspconfig.util').root_pattern('biome.json', 'biome.jsonc')(fname)
-              or require('lspconfig.util').find_package_json_ancestor(fname)
-              or require('lspconfig.util').find_node_modules_ancestor(fname)
-              or require('lspconfig.util').find_git_ancestor(fname)
+            -- or require('lspconfig.util').find_package_json_ancestor(fname)
+            -- or require('lspconfig.util').find_node_modules_ancestor(fname)
+            -- or require('lspconfig.util').find_git_ancestor(fname)
           end,
         },
 
