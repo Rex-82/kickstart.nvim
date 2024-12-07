@@ -57,6 +57,9 @@ vim.g.gruvbox_material_background = 'hard'
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+vim.opt.spell = true
+vim.cmd 'set spelllang=en_us,it'
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
