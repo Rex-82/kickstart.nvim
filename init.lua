@@ -498,17 +498,6 @@ require('lazy').setup({
         -- tsserver = {},
         --
 
-        -- tsserver = {
-        --   settings = {
-        --     implicitProjectConfiguration = {
-        --       checkJs = false,
-        --     },
-        --     compilerOptions = {
-        --       strictNullChecks = false,
-        --     },
-        --   },
-        -- },
-
         biome = {
           root_dir = function(fname)
             return require('lspconfig.util').root_pattern('biome.json', 'biome.jsonc')(fname)
