@@ -186,6 +186,9 @@ vim.keymap.set('n', '<leader>dd', ':DogeGenerate<CR>', { desc = 'Doge: Generate 
 vim.keymap.set('n', '<leader>fg', ':Glow<CR>', { desc = 'Glow: Preview markdown' })
 vim.keymap.set('n', '<leader>fG', '! konsole --qwindowgeometry 960x1080 -e glow -p % &<CR>', { desc = 'Glow: Preview markdown in new window' })
 
+-- Oil keymaps
+vim.keymap.set('n', '<leader>O', ':Oil<CR>', { desc = 'Open current dir in Oil' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
