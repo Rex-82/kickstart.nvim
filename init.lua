@@ -119,6 +119,11 @@ vim.opt.hlsearch = true
 -- Better experience with auto-session
 vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
 
+vim.filetype.add {
+  pattern = {
+    ['%..+rc'] = 'json',
+  },
+}
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
