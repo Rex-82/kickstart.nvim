@@ -35,12 +35,6 @@ end
 -- Set abbreviation: ':bde' will be: ':bd | e '
 vim.cmd 'cabbr bde bd \\| e '
 
--- Allow clipboard copy paste in neovim
-vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
-
 -- Set <space> as the leader key
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -169,11 +163,6 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
--- Markdown specific commands
-vim.keymap.set('n', 'gm1', [[:%s/●/\r-/g]], { desc = 'Replace ● with -' })
-vim.keymap.set('n', 'gm2', [[:%s/○/\r\t-/g]], { desc = 'Replace ○ with -' })
-vim.keymap.set('n', 'gm3', [[:,$s/\n/  \r]], { desc = 'Replace line ending with 2 spaces and return' })
 
 -- Half-page movement improved -> keeps the cursor centered when moving
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Move half page down and center view' })
@@ -483,43 +472,7 @@ require('lazy').setup({
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
-        --
-
-        biome = {
-          root_dir = function(fname)
-            return require('lspconfig.util').root_pattern('biome.json', 'biome.jsonc')(fname)
-            -- or require('lspconfig.util').find_package_json_ancestor(fname)
-            -- or require('lspconfig.util').find_node_modules_ancestor(fname)
-            -- or require('lspconfig.util').find_git_ancestor(fname)
-          end,
-        },
-
-        graphql = {},
-
-        angularls = {},
-
-        -- tailwindcss = {},
 
         rust_analyzer = {
           cmd = { 'rust-analyzer' },
@@ -530,22 +483,6 @@ require('lazy').setup({
           end,
           single_file_support = true,
         },
-
-        gopls = {
-          cmd = { 'gopls' },
-          filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-          settings = {
-            gopls = {
-              completeUnimported = true,
-              usePlaceholders = true,
-              analyses = {
-                unusedParams = true,
-              },
-            },
-          },
-        },
-
-        astro = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -559,32 +496,6 @@ require('lazy').setup({
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               -- diagnostics = { disable = { 'missing-fields' } },
             },
-          },
-        },
-
-        emmet_language_server = {
-          filetypes = { 'eruby', 'html', 'javascriptreact', 'pug', 'typescriptreact' },
-          -- Read more about this options in the [vscode docs](https://code.visualstudio.com/docs/editor/emmet#_emmet-configuration).
-          -- **Note:** only the options listed in the table are supported.
-          init_options = {
-            ---@type table<string, string>
-            includeLanguages = {},
-            --- @type string[]
-            excludeLanguages = {},
-            --- @type string[]
-            extensionsPath = {},
-            --- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/preferences/)
-            preferences = {},
-            --- @type boolean Defaults to `true`
-            showAbbreviationSuggestions = true,
-            --- @type "always" | "never" Defaults to `"always"`
-            showExpandedAbbreviation = 'always',
-            --- @type boolean Defaults to `false`
-            showSuggestionsAsSnippets = false,
-            --- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/syntax-profiles/)
-            syntaxProfiles = {},
-            --- @type table<string, string> [Emmet Docs](https://docs.emmet.io/customization/snippets/#variables)
-            variables = {},
           },
         },
       }
@@ -649,15 +560,9 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         sh = { 'shfmt' },
-        html = { 'prettierd' },
-        css = { 'prettierd' },
         markdown = { 'prettierd' },
-        javascript = { 'biome', 'prettierd' },
-        typescript = { 'biome', 'prettierd' },
         json = { 'biome', 'prettierd' },
         rust = { 'rustfmt' },
-        astro = { 'prettierd', 'prettier' },
-        graphql = { 'prettierd', 'prettier' },
       },
     },
   },
@@ -849,9 +754,6 @@ require('lazy').setup({
         'bash',
         'c',
         'diff',
-        'go',
-        'html',
-        'javascript',
         'jsdoc',
         'json',
         'jsonc',
@@ -860,18 +762,13 @@ require('lazy').setup({
         'luap',
         'markdown',
         'markdown_inline',
-        'php',
-        'python',
         'query',
         'regex',
         'toml',
-        'tsx',
-        'typescript',
         'vim',
         'vimdoc',
         'xml',
         'yaml',
-        'astro',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,

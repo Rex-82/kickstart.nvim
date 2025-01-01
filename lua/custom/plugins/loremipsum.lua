@@ -1,1 +1,0 @@
-return { 'derektata/lorem.nvim' }
