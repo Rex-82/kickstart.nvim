@@ -14,6 +14,7 @@ return {
     dashboard.section.buttons.val = {
       dashboard.button('e', '  > New file', ':ene <BAR> startinsert <CR>'),
       dashboard.button('d', '󰙨  > New draft', ':cd ~/Documents/projects/drafts/ <BAR> ene <BAR> startinsert <CR>'),
+      dashboard.button('o', '  > Oil', ':Oil<CR>'),
       dashboard.button('f', '󰈞  > Find file', ':Telescope find_files<CR>'),
       dashboard.button('r', '  > Recent', ':Telescope oldfiles<CR>'),
       dashboard.button('l', '  > Sessions List', ':Telescope session-lens search_session<CR>'),
