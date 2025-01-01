@@ -493,18 +493,6 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
-        --
 
         biome = {
           root_dir = function(fname)
@@ -518,32 +506,6 @@ require('lazy').setup({
         graphql = {},
 
         angularls = {},
-
-        -- tailwindcss = {},
-
-        rust_analyzer = {
-          cmd = { 'rust-analyzer' },
-          filetypes = { 'rust' },
-          -- root_dir = root_pattern('Cargo.toml', 'rust-project.json'),
-          root_dir = function(fname)
-            return require('lspconfig.util').root_pattern('Cargo.toml', 'rust-project.json')(fname) or require('lspconfig.util').find_git_ancestor(fname)
-          end,
-          single_file_support = true,
-        },
-
-        gopls = {
-          cmd = { 'gopls' },
-          filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-          settings = {
-            gopls = {
-              completeUnimported = true,
-              usePlaceholders = true,
-              analyses = {
-                unusedParams = true,
-              },
-            },
-          },
-        },
 
         astro = {},
 
@@ -605,19 +567,7 @@ require('lazy').setup({
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-      require('mason-lspconfig').setup {
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for tsserver)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-          ['rust_analyzer'] = function() end,
-        },
-      }
+      require('mason-lspconfig').setup { ensure_installed = ensure_installed, automatic_installation = true }
     end,
   },
 
@@ -655,7 +605,6 @@ require('lazy').setup({
         javascript = { 'biome', 'prettierd' },
         typescript = { 'biome', 'prettierd' },
         json = { 'biome', 'prettierd' },
-        rust = { 'rustfmt' },
         astro = { 'prettierd', 'prettier' },
         graphql = { 'prettierd', 'prettier' },
       },
@@ -847,9 +796,7 @@ require('lazy').setup({
     opts = {
       ensure_installed = {
         'bash',
-        'c',
         'diff',
-        'go',
         'html',
         'javascript',
         'jsdoc',
@@ -860,8 +807,6 @@ require('lazy').setup({
         'luap',
         'markdown',
         'markdown_inline',
-        'php',
-        'python',
         'query',
         'regex',
         'toml',
