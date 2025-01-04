@@ -189,6 +189,10 @@ vim.keymap.set('n', '<leader>fG', '! konsole --qwindowgeometry 960x1080 -e glow 
 -- Oil keymaps
 vim.keymap.set('n', '<leader>O', ':Oil<CR>', { desc = 'Open current dir in Oil' })
 
+-- Quickfix keymaps
+vim.keymap.set('n', '<leader>j', ':cnext<CR>zz', { desc = 'Go to next quickfix item' })
+vim.keymap.set('n', '<leader>k', ':cprev<CR>zz', { desc = 'Go to previous quickfix item' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
