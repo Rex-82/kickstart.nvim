@@ -224,6 +224,21 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'Buf
   end,
 })
 
+-- Show and Hide cmdline when recording a macro
+-- Adjust cmdheight when recording starts
+vim.api.nvim_create_autocmd('RecordingEnter', {
+  callback = function()
+    vim.opt.cmdheight = 1
+  end,
+})
+
+-- Reset cmdheight when recording stops
+vim.api.nvim_create_autocmd('RecordingLeave', {
+  callback = function()
+    vim.opt.cmdheight = 0
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --  See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
