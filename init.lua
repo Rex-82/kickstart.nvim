@@ -189,6 +189,11 @@ vim.keymap.set('n', '<leader>fG', '! konsole --qwindowgeometry 960x1080 -e glow 
 -- Oil keymaps
 vim.keymap.set('n', '<leader>O', ':Oil<CR>', { desc = 'Open current dir in Oil' })
 
+-- Mini Diff keymap
+vim.keymap.set('n', '<leader>go', function()
+  MiniDiff.toggle_overlay(0)
+end, { desc = 'Toggle diff overlay' })
+
 -- Quickfix keymaps
 vim.keymap.set('n', '<leader>j', ':cnext<CR>zz', { desc = 'Go to next quickfix item' })
 vim.keymap.set('n', '<leader>k', ':cprev<CR>zz', { desc = 'Go to previous quickfix item' })
@@ -766,6 +771,14 @@ require('lazy').setup({
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
+
+      require('mini.diff').setup {
+        view = {
+          style = vim.go.number and 'number' or 'sign',
+          signs = { add = '┃', change = '┃', delete = '┃' },
+          priority = 199,
+        },
+      }
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
