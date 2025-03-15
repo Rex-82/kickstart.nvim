@@ -783,14 +783,6 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
-      require('mini.diff').setup {
-        view = {
-          style = vim.go.number and 'number' or 'sign',
-          signs = { add = '┃', change = '┃', delete = '┃' },
-          priority = 199,
-        },
-      }
-
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
