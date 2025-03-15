@@ -532,8 +532,6 @@ require('lazy').setup({
 
         html = {},
 
-        angularls = {},
-
         astro = {},
 
         lua_ls = {
