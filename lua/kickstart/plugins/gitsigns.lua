@@ -25,17 +25,17 @@ return {
         end
 
         -- Navigation
-        map('n', ']c', function()
+        map('n', ']h', function()
           if vim.wo.diff then
-            vim.cmd.normal { ']c', bang = true }
+            vim.cmd.normal { ']h', bang = true }
           else
             gitsigns.nav_hunk 'next'
           end
         end, { desc = 'Navigate to [N]ext [H]unk' })
 
-        map('n', '[c', function()
+        map('n', '[h', function()
           if vim.wo.diff then
-            vim.cmd.normal { '[c', bang = true }
+            vim.cmd.normal { '[h', bang = true }
           else
             gitsigns.nav_hunk 'prev'
           end
@@ -57,7 +57,7 @@ return {
         map('n', '<leader>hb', function()
           gitsigns.blame_line { full = true }
         end, { desc = '[H]unk [B]lame Line (Full)' })
-        map('n', '<leader>uB', gitsigns.toggle_current_line_blame, { desc = 'Toggle Line blame' })
+        map('n', '<leader>hB', gitsigns.toggle_current_line_blame, { desc = 'Toggle Line blame' })
         map('n', '<leader>hd', gitsigns.diffthis, { desc = '[H]unk [D]iff This' })
         map('n', '<leader>hD', function()
           gitsigns.diffthis '~'
