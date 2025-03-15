@@ -170,11 +170,6 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- Markdown specific commands
-vim.keymap.set('n', 'gm1', [[:%s/●/\r-/g]], { desc = 'Replace ● with -' })
-vim.keymap.set('n', 'gm2', [[:%s/○/\r\t-/g]], { desc = 'Replace ○ with -' })
-vim.keymap.set('n', 'gm3', [[:,$s/\n/  \r]], { desc = 'Replace line ending with 2 spaces and return' })
-
 -- Half-page movement improved -> keeps the cursor centered when moving
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Move half page down and center view' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Move half page up and center view' })
@@ -526,6 +521,8 @@ require('lazy').setup({
             -- or require('lspconfig.util').find_git_ancestor(fname)
           end,
         },
+
+        mdx_analyzer = {},
 
         graphql = {},
 
