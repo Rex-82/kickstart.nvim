@@ -8,6 +8,7 @@ return {
       -- to include all supported code actions
       -- specify commands exposed as code_actions
       expose_as_code_action = { 'all' },
+      -- tsserver_path = '/home/simone/.local/share/fnm/node-versions/v22.14.0/installation/lib/node_modules/typescript-language-server/lib/cli.mjs',
     },
   },
 }
